@@ -1,0 +1,5 @@
+{
+  "name": "TV5MONDE Personalization POC",
+  "description": "A frontend-only proof of concept demonstrating AI-driven content personalization aligned with TV5MONDE's visual identity. Features dynamic content generation based on user interests using Gemini 2.5 Flash.",
+  "requestFramePermissions": []
+}
