@@ -37,6 +37,9 @@ The goal is to show that this approach is:
 * Easy to prototype
 * Easy to test against real data
 
+
+![Segment Demo](./brad-ross-frontend/assets/segment_selection.png)
+
 ---
 
 ## 2. Methodology Overview
@@ -66,6 +69,9 @@ The goal is to show that this approach is:
    * Simple segment labels
    * Percentages by segment
    * Time-based scheduling rules
+
+![After View](./brad-ross-frontend/assets/example_personalized.png)
+
 
 If the simple version already works well, then more advanced ML is just an optimization layer later.
 
