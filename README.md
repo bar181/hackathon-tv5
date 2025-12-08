@@ -1,329 +1,176 @@
-# Agentics Foundation TV5 Hackathon
+# TV5MONDE AI Personalization POC
 
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![npm version](https://img.shields.io/badge/npm-agentics--hackathon-red.svg)](https://www.npmjs.com/package/agentics-hackathon)
-[![Discord](https://img.shields.io/badge/Discord-Agentics-7289da.svg)](https://discord.agentics.org)
-
-> **Build the future of agentic AI - Supported by Google Cloud**
-
-The **Agentics Foundation TV5 Hackathon** repository provides CLI tools, MCP servers, and reference implementations for building agentic AI solutions. This includes the **AI Media Discovery** demo app showcasing the Agent-Ready Web (ARW) specification.
-
-🌐 **Website:** [agentics.org/hackathon](https://agentics.org/hackathon)
-💬 **Discord:** [discord.agentics.org](https://discord.agentics.org)
-📦 **npm:** `npx agentics-hackathon`
+**Bradley Ross Submission for the Agentics Foundation Hackathon**
 
 ---
 
-## 🎯 The Challenge
+## Overview
 
-Every night, millions spend up to **45 minutes deciding what to watch** — billions of hours lost every day. Not from lack of content, but from fragmentation across streaming platforms.
+This proof-of-concept demonstrates a paradigm shift in broadcast television personalization. Traditional recommendation algorithms assume **one profile = one person**, but real-world viewing is far more complex. Families share remotes, accounts serve multiple viewers, and viewing contexts change throughout the day.
 
-Join us to build agentic AI solutions that solve real problems using Google Cloud, Gemini, Claude, and open-source tools.
+Our AI-powered solution introduces **Invisible Design** - inferring distinct viewer segments from behavioral patterns without requiring explicit profile switching or user input.
 
----
+## The Problem
 
-## 🚀 Quick Start
+Standard broadcast recommendation systems fail in shared-account scenarios:
 
-```bash
-# Initialize your hackathon project
-npx agentics-hackathon init
+- **Chaotic Recommendations**: A "Top Picks" row mixing Dad's sci-fi with kids' cartoons and teen dramas
+- **Profile Confusion**: Algorithms treat all viewing history as belonging to a single persona
+- **Context Blindness**: No awareness of temporal patterns (e.g., Friday date nights vs. Saturday morning cartoons)
 
-# Browse and install 17+ AI tools
-npx agentics-hackathon tools
+## The Solution: Multi-Segment Personalization
 
-# Check project status
-npx agentics-hackathon status
+Our AI engine analyzes viewing behavior to identify **Micro-Segments** within a single profile:
 
-# Start MCP server for AI assistant integration
-npx agentics-hackathon mcp
+| Segment | Example Content | Behavioral Signals |
+|---------|-----------------|-------------------|
+| **Dad Solo** (50%) | The Expanse, Cosmos, Interstellar | Late-night viewing, sci-fi genres |
+| **Co-Viewing** (25%) | Bluey, PAW Patrol, Peppa Pig | Weekend mornings, kids content |
+| **Teen** (15%) | Stranger Things, Euphoria | Evening viewing, drama genres |
+| **Date Night** (10%) | The Notebook, Love Actually | Friday/Saturday evenings, romcoms |
+
+## Features
+
+### 1. Standard vs Personalized View Comparison
+- **Standard View**: Shows the "before" state - chaotic, mixed recommendations
+- **Personalized View**: Demonstrates segment-aware recommendations with AI reasoning
+
+### 2. Interactive 3D Data Visualization
+- Real-time 3D scatter plot of viewing events
+- Toggle between "Raw Data" (chaos) and "AI Segments" (clustered)
+- Click any data point to see AI classification details
+
+### 3. AI-Powered Recommendations
+- Powered by **Google Gemini 2.5 Flash**
+- Real-time personalized content generation
+- Segment-aware recommendation logic
+
+### 4. Concept Demo Video
+- Embedded video demonstration on the home page
+- Visual explanation of the personalization concept
+
+## Technical Architecture
+
+### Frontend Stack
+- **React 18** with TypeScript
+- **Vite** for build tooling
+- **Tailwind CSS** for styling
+- **Three.js** / React Three Fiber for 3D visualizations
+- **Lucide React** for icons
+
+### AI Integration
+- **Google Generative AI SDK** (`@google/genai`)
+- **Model**: Gemini 2.5 Flash
+- **Structured JSON responses** with schema validation
+
+### Key Components
+
+| Component | Purpose |
+|-----------|---------|
+| `App.tsx` | Main application router and view management |
+| `Hero.tsx` | Landing page hero section with concept video |
+| `HowTo.tsx` | Interactive 3D visualization and algorithm explanation |
+| `DataCluster.tsx` | Three.js 3D scatter plot visualization |
+| `VideoCard.tsx` | Content card component for recommendations |
+| `Header.tsx` | Navigation and view switching |
+| `gemini.ts` | Google Gemini API integration service |
+
+### Data Flow
+
+```
+Viewing History → AI Analysis → Segment Classification → Personalized Recommendations
+       ↓                ↓                  ↓                        ↓
+   Raw Events    Vector Embedding    Cluster Assignment    Context-Aware Content
 ```
 
----
+## Project Structure
 
-## 🏆 Hackathon Tracks
-
-| Track | Description |
-|-------|-------------|
-| **Entertainment Discovery** | Solve the 45-minute decision problem - help users find what to watch |
-| **Multi-Agent Systems** | Build collaborative AI agents with Google ADK and Vertex AI |
-| **Agentic Workflows** | Create autonomous workflows with Claude, Gemini, and orchestration |
-| **Open Innovation** | Bring your own idea - any agentic AI solution that makes an impact |
-
----
-
-## ✨ Features
-
-### 🛠 CLI Tool (`npx agentics-hackathon`)
-
-- **`init`** - Interactive project setup with track selection and tool installation
-- **`tools`** - Browse and install 17+ AI development tools across 6 categories
-- **`status`** - View project configuration and installed tools
-- **`info`** - Hackathon information and resources
-- **`mcp`** - Start MCP server (stdio or SSE transport)
-- **`discord`** - Join the community
-- **`help`** - Detailed guides and examples
-
-### 🤖 MCP Server
-
-Full Model Context Protocol implementation with:
-- **Tools**: `get_hackathon_info`, `get_tracks`, `get_available_tools`, `get_project_status`, `check_tool_installed`, `get_resources`
-- **Resources**: Project configuration, track information
-- **Prompts**: `hackathon_starter`, `choose_track`
-
-### 📱 Demo Applications
-
-| App | Description |
-|-----|-------------|
-| **[Media Discovery](apps/media-discovery/)** | AI-powered movie/TV discovery with ARW implementation |
-| **[ARW Chrome Extension](apps/arw-chrome-extension/)** | Browser extension for inspecting ARW compliance |
-
-### 📐 ARW (Agent-Ready Web) Components
-
-This repository includes reference implementations of the ARW specification:
-
-- **Specification**: [ARW v0.1 Draft](spec/ARW-0.1-draft.md)
-- **Schemas**: JSON schemas for validation (`packages/schemas/`)
-- **Validators**: Python and Node.js validation tools (`packages/validators/`)
-- **Badges**: Compliance level badges (`packages/badges/`)
-
----
-
-## 📦 Repository Structure
-
-```plaintext
-hackathon-tv5/
-├── src/                             # Hackathon CLI source
-│   ├── cli.ts                      # Main CLI entry point
-│   ├── commands/                   # CLI commands (init, tools, status, etc.)
-│   ├── mcp/                        # MCP server implementation
-│   │   ├── server.ts              # MCP tools, resources, prompts
-│   │   ├── stdio.ts               # STDIO transport
-│   │   └── sse.ts                 # SSE transport
-│   ├── constants.ts               # Tracks, tools, configuration
-│   └── utils/                     # Helpers and utilities
-│
-├── apps/                           # Demo Applications
-│   ├── media-discovery/           # AI Media Discovery (Next.js + ARW)
-│   │   ├── public/
-│   │   │   ├── .well-known/arw-manifest.json  # ARW manifest
-│   │   │   └── llms.txt                       # ARW discovery file
-│   │   └── src/                   # React components & API routes
-│   └── arw-chrome-extension/      # ARW Inspector Chrome Extension
-│       ├── manifest.json          # Chrome Manifest V3
-│       └── src/                   # Popup, content script, service worker
-│
-├── packages/                       # Shared Packages
-│   ├── @arw/schemas/              # TypeScript ARW schemas with Zod
-│   ├── schemas/                   # JSON schemas for ARW validation
-│   ├── validators/                # Python & Node.js validators
-│   ├── validator/                 # ARW validator CLI tool
-│   ├── badges/                    # ARW compliance badges (SVG)
-│   ├── cli/                       # Rust ARW CLI (advanced)
-│   ├── crawler-sdk/               # TypeScript SDK for ARW crawler service
-│   ├── crawler-service/           # High-performance crawler API service
-│   ├── nextjs-plugin/             # Next.js plugin for ARW integration
-│   └── benchmark/                 # ARW benchmark evaluation
-│
-├── spec/                           # ARW Specification
-│   └── ARW-0.1-draft.md           # Editor's draft specification
-│
-├── docs/                           # Documentation
-├── ai_docs/                        # AI-focused documentation
-├── scripts/                        # Build and utility scripts
-│
-├── .claude/                        # Claude Code configuration
-│   ├── commands/                  # Slash commands
-│   └── agents/                    # Sub-agent definitions
-│
-├── CLAUDE.md                       # Claude Code guidance
-└── README.md                       # This file
+```
+brad-ross-frontend/
+├── assets/
+│   └── hackathon - I want with others.mp4    # Concept demo video
+├── components/
+│   ├── DataCluster.tsx     # 3D visualization
+│   ├── Header.tsx          # Navigation
+│   ├── Hero.tsx            # Landing hero with video
+│   ├── HowTo.tsx           # Algorithm explanation
+│   ├── TopicSelector.tsx   # Interest selection
+│   └── VideoCard.tsx       # Content cards
+├── services/
+│   └── gemini.ts           # Gemini AI integration
+├── App.tsx                 # Main application
+├── index.tsx               # Entry point
+├── index.html              # HTML template
+├── types.ts                # TypeScript interfaces
+├── package.json            # Dependencies
+├── tsconfig.json           # TypeScript config
+└── vite.config.ts          # Vite configuration
 ```
 
----
-
-## 🔧 Available Tools (17+)
-
-The CLI provides access to tools across 6 categories:
-
-### AI Assistants
-- **Claude Code CLI** - Anthropic's AI-powered coding assistant
-- **Gemini CLI** - Google's Gemini model interface
-
-### Orchestration & Agent Frameworks
-- **Claude Flow** - #1 agent orchestration platform with 101 MCP tools
-- **Agentic Flow** - Production AI orchestration with 66 agents
-- **Flow Nexus** - Competitive agentic platform on MCP
-- **Google ADK** - Build multi-agent systems with Google's Agent Development Kit
-
-### Cloud Platform
-- **Google Cloud CLI** - gcloud SDK for Vertex AI, Cloud Functions
-- **Vertex AI SDK** - Google Cloud's unified ML platform
-
-### Databases & Memory
-- **RuVector** - Vector database and embeddings toolkit
-- **AgentDB** - Database for agentic AI state management
-
-### Synthesis & Advanced Tools
-- **Agentic Synth** - Synthesis tools for agentic development
-- **Strange Loops** - Consciousness exploration SDK
-- **SPARC 2.0** - Autonomous vector coding agent
-
-### Python Frameworks
-- **LionPride** - Python agentic AI framework
-- **Agentic Framework** - AI agents with natural language
-- **OpenAI Agents SDK** - Multi-agent workflows from OpenAI
-
----
-
-## 🌐 ARW (Agent-Ready Web)
-
-This repository demonstrates the ARW specification through the **Media Discovery** app.
-
-### What is ARW?
-
-ARW provides infrastructure for efficient agent-web interaction:
-
-- **85% token reduction** - Machine views vs HTML scraping
-- **10x faster discovery** - Structured manifests vs crawling
-- **OAuth-enforced actions** - Safe agent transactions
-- **AI-* headers** - Full observability of agent traffic
-
-### ARW in Media Discovery
-
-The media-discovery app implements ARW with:
-
-```json
-// /.well-known/arw-manifest.json
-{
-  "version": "0.1",
-  "profile": "ARW-1",
-  "site": {
-    "name": "AI Media Discovery",
-    "description": "Discover movies and TV shows through natural language"
-  },
-  "actions": [
-    {
-      "id": "semantic_search",
-      "endpoint": "/api/search",
-      "method": "POST"
-    }
-  ]
-}
-```
-
-See the [ARW Specification](spec/ARW-0.1-draft.md) for full details.
-
----
-
-## 💻 Development
+## Getting Started
 
 ### Prerequisites
+- Node.js (v18+)
+- Google Gemini API Key
 
-- Node.js 18+
-- npm or pnpm
+### Installation
 
-### Build & Run
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Configure your API key in `.env.local`:
+   ```
+   GEMINI_API_KEY=your_api_key_here
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open http://localhost:5173 in your browser
+
+### Build for Production
 
 ```bash
-# Install dependencies
-npm install
-
-# Build the CLI
 npm run build
-
-# Run locally
-npm start
-
-# Development mode (watch)
-npm run dev
-
-# Run linter
-npm run lint
+npm run preview
 ```
 
-### MCP Server
+## Key Insights
 
-```bash
-# STDIO transport (for Claude Desktop, etc.)
-npm run mcp:stdio
+### Invisible Design Principles
 
-# SSE transport (for web integrations)
-npm run mcp:sse
-```
+1. **Outliers are NOT Errors**: When "Dad" watches Paw Patrol, the AI identifies a Co-Viewing segment rather than treating it as noise
 
-### Media Discovery App
+2. **Temporal Context Matters**: The "Date Night" cluster activates specifically on Friday/Saturday evenings
 
-```bash
-cd apps/media-discovery
-npm install
-npm run dev
-```
+3. **No Explicit Profiles Required**: The system infers segments from behavior without requiring users to manage multiple profiles
+
+### Business Value
+
+- **Improved Engagement**: Relevant recommendations increase watch time
+- **Reduced Churn**: Better UX for shared accounts reduces frustration
+- **Operational Efficiency**: No manual profile management overhead
+- **Competitive Advantage**: Novel approach to the shared-account problem
+
+## Demo Walkthrough
+
+1. **Home Page**: Watch the concept demo video explaining the personalization approach
+2. **Standard (Before)**: See the chaotic mixed recommendations typical of standard algorithms
+3. **Personalized (After)**: Experience segment-aware recommendations with AI reasoning visible
+4. **How It Works**: Interact with the 3D visualization to understand the clustering algorithm
+
+## Future Enhancements
+
+- Real-time segment detection during playback
+- Cross-device viewing pattern analysis
+- Household member prediction models
+- A/B testing framework for recommendation strategies
+- Integration with live TV scheduling
 
 ---
 
-## 🔌 MCP Integration
-
-Add to your Claude Desktop config (`claude_desktop_config.json`):
-
-```json
-{
-  "mcpServers": {
-    "agentics-hackathon": {
-      "command": "npx",
-      "args": ["agentics-hackathon", "mcp"]
-    }
-  }
-}
-```
-
-Or use SSE transport:
-
-```bash
-npx agentics-hackathon mcp sse --port 3000
-```
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Areas of focus:
-
-1. **CLI Improvements** - New commands, better UX
-2. **Tool Integrations** - Add more AI tools
-3. **Demo Apps** - Build showcases for hackathon tracks
-4. **ARW Implementation** - Expand specification coverage
-5. **Documentation** - Guides and tutorials
-
-### Development Workflow
-
-See [CLAUDE.md](CLAUDE.md) for development guidelines including:
-- SPARC methodology for systematic development
-- Concurrent execution patterns
-- File organization rules
-
----
-
-## 📜 License
-
-This project is licensed under the [Apache License 2.0](LICENSE).
-
----
-
-## 🔗 Links
-
-- **🌐 Hackathon Website:** [agentics.org/hackathon](https://agentics.org/hackathon)
-- **💬 Discord:** [discord.agentics.org](https://discord.agentics.org)
-- **📦 GitHub:** [github.com/agenticsorg/hackathon-tv5](https://github.com/agenticsorg/hackathon-tv5)
-- **📖 ARW Spec:** [ARW v0.1 Draft](spec/ARW-0.1-draft.md)
-
----
-
-<div align="center">
-
-**🚀 Agentics Foundation TV5 Hackathon**
-
-*Building the Future of Agentic AI - Supported by Google Cloud*
-
-[Website](https://agentics.org/hackathon) | [Discord](https://discord.agentics.org) | [GitHub](https://github.com/agenticsorg/hackathon-tv5)
-
-</div>
+**Built for TV5MONDE** | Powered by Google Gemini | Agentics Foundation Hackathon 2024
